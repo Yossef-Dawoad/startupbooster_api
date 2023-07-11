@@ -1,14 +1,15 @@
+import os
 import re
 
 from dotenv import load_dotenv
 from langchain import HuggingFaceHub, LLMChain, PromptTemplate
 
 load_dotenv()
+
 REPO_ID = "tiiuae/falcon-7b-instruct"
 LLM = HuggingFaceHub(
     repo_id=REPO_ID,
-    # huggingfacehub_api_token=os.environ.get("huggingfacehub_api_token"),
-    huggingfacehub_api_token="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",
+    huggingfacehub_api_token=os.environ['HUGGINGFACEHUB_API_TOKEN'],
     model_kwargs={"temperature": 0.3, "max_new_tokens": 512},
 )
 
