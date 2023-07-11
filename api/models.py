@@ -24,11 +24,13 @@ class Base(DeclarativeBase):
 intpk = Annotated[int, mapped_column(primary_key=True)]
 text = Annotated[str, mapped_column(sa.String, nullable=False)]
 pklStringList = Annotated[
-    list[str], mapped_column(sa.PickleType, nullable=False),
+    list[str],
+    mapped_column(sa.PickleType, nullable=False),
 ]
 business_fk = Annotated[int, mapped_column(sa.ForeignKey("business.id"))]
 timeNow = Annotated[
-    datetime, mapped_column(sa.DateTime(timezone=True), default=func.now()),
+    datetime,
+    mapped_column(sa.DateTime(timezone=True), default=func.now()),
 ]
 
 
@@ -40,9 +42,9 @@ class Bussiness(Base):
     snippet: Mapped[text]  # ✨✨✨
     keywords: Mapped[pklStringList]  # ✨✨✨
     createdAt: Mapped[timeNow]  # ✨✨✨✨
-    # keywords: Mapped[list["Keyword"]] = relationship(
-    #     "Keyword", back_populates="business"
-    # )
+
+    def __repr__(self) -> str:  # noqa: ANN101
+        return f" Business {self.name} \n{self.snippet}\n\n {self.keywords}"
 
 
 # class Keyword(Base):

@@ -1,7 +1,9 @@
 [project]
 name = 'Brand Booster'
-version = "0.0.3"
-authors = ["Yousef Dawoud <yousefdawoud.dev@outlook.com>"]
+version = "0.2.0"
+authors = [
+    {name= "Yousef Dawoud", email="yousefdawoud.dev@outlook.com"}
+]
 requires-python = ">=3.9"
 
 [tool.ruff]
@@ -23,11 +25,13 @@ extend-select = [
     'ANN', # flake8-annotations
     'PYI052', #Need type annotation for
     'DTZ', #FLAKE datetime
+    'ASYNC', #FLAKE ASYNC
+    'PLE1700'
 ]   
 # fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
 show-fixes = true
 target-version = "py310"
-line-length = 79
+line-length = 88
 ignore = []
 
 

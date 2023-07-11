@@ -1,28 +1,45 @@
 # ruff: enable=type_checking,type_annotations
-from sqlalchemy.orm import Session
+import sqlalchemy as sa
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from . import models, schemas
 
 
-def get_businessModel(
-    db: Session, business_name: str,
-) -> models.Bussiness | None:
-    return (
-        db.query(models.Bussiness)
-        .filter(models.Bussiness.name == business_name)
-        .first()
+async def get_businessModel(
+    db: AsyncSession,
+    business_name: str,
+) -> (models.Bussiness | None):
+    business = await db.execute(
+        sa.select(models.Bussiness).filter(models.Bussiness.name == business_name),
     )
+    return business.scalar_one_or_none()
+
+
+async def get_businessModelbyId(
+    db: AsyncSession,
+    business_id: int,
+) -> (models.Bussiness | None):
+    business = await db.execute(
+        sa.select(models.Bussiness).filter(models.Bussiness.id == business_id),
+    )
+    return business.scalar_one_or_none()
 
 
 ################################# Business Model ##############################
-def get_business(
-    db: Session, skip: int = 0, limit: int = 10,
+async def get_business(
+    db: AsyncSession,
+    skip: int = 0,
+    limit: int = 10,
 ) -> list[models.Bussiness]:
-    return db.query(models.Bussiness).offset(skip).limit(limit).all()
+    # businesses =  db.query(models.Bussiness).offset(skip).limit(limit).all()
+    businesses = await db.execute(
+        sa.select(models.Bussiness).offset(skip).limit(limit),
+    )
+    return businesses.scalars().all()
 
 
-def create_business(
-    db: Session,
+async def create_business(
+    db: AsyncSession,
     business: schemas.BusinessModelCreate,
     snippet: str,
     keywords: list[str],
@@ -33,6 +50,6 @@ def create_business(
         keywords=keywords,
     )
     db.add(db_business)
-    db.commit()
-    db.refresh(db_business)
+    await db.commit()
+    await db.refresh(db_business)
     return db_business

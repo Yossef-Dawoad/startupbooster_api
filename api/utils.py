@@ -9,7 +9,7 @@ load_dotenv()
 REPO_ID = "tiiuae/falcon-7b-instruct"
 LLM = HuggingFaceHub(
     repo_id=REPO_ID,
-    huggingfacehub_api_token=os.environ['HUGGINGFACEHUB_API_TOKEN'],
+    huggingfacehub_api_token=os.environ["HUGGINGFACEHUB_API_TOKEN"],
     model_kwargs={"temperature": 0.3, "max_new_tokens": 512},
 )
 
@@ -40,13 +40,14 @@ def process_generatedkeywords(text: str) -> list[str]:
         * The regular expression  the beginning of each item in the list that include numbers that are not preceded by a dot or a dash.
     """
 
-    patt = re.compile(r"^(\d+\.|\d+-)?\s*|- ")
-    lst = re.split(r"[,\n;-]\s*", text)
+    patt = re.compile(r"^(\d+\.|\d+-)?\s*|- (?=\s|\n)")
+    lst = re.split(r"[,\n;]\s*|-(?=\s|\n)", text)
     new_list = [patt.sub("", item).strip().lower() for item in lst if item]
     return list(set(new_list))
 
 
-def generate_keywords(promptq: str) -> dict[str, list]:
+async def generate_keywords(promptq: str) -> dict[str, list]:
+    """Generate 10 related branding keywords for a given business as a dictionary."""
     template = """
 you are a helpfull search optimization expert asked to generate 10 related keywords about different business
 the following examples should be how you respond to the user questions.
@@ -82,6 +83,7 @@ your answer:
 """
     prompt = PromptTemplate(template=template, input_variables=["question"])
     llm_chain = LLMChain(prompt=prompt, llm=LLM)
+    # arun is async generations but not this model
     response = llm_chain.run(promptq)
 
     # Extract output text.
@@ -89,7 +91,7 @@ your answer:
     return {"kw": keywords_}
 
 
-def generate_business_snippet(promptq: str) -> str:
+async def generate_business_snippet(promptq: str) -> str:
     template = "Generate upbeat branding snippet for {question}"
     prompt = PromptTemplate(template=template, input_variables=["question"])
     llm_chain = LLMChain(prompt=prompt, llm=LLM)
