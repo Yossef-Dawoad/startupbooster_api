@@ -1,0 +1,40 @@
+[project]
+name = 'Brand Booster'
+version = "0.0.3"
+authors = ["Yousef Dawoud <yousefdawoud.dev@outlook.com>"]
+requires-python = ">=3.9"
+
+[tool.ruff]
+extend-select = [
+    'C4', 
+    "F",   # pyflakes
+    "E", # Errors
+    "W", # warnnings
+    "RUF", # Ruff-specific rules
+    "PERF", #PREFlint
+    "PL", # PYLINT
+    "UP",  # pyupgrade
+    'SIM', #sim for code simplification
+    'TCH', #tch for type checking
+    'F707', # Syntax error in forward annotation
+    'I001', # Import block is un-sorted or un-formatted
+    'I002', # Missing required import:
+    'COM', # FLAKE COMMA
+    'ANN', # flake8-annotations
+    'PYI052', #Need type annotation for
+    'DTZ', #FLAKE datetime
+]   
+# fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+show-fixes = true
+target-version = "py310"
+line-length = 79
+ignore = []
+
+
+# # Enforce type annotations for all variables, parameters, and return values
+# [tool.ruff.type_annotations]
+# always = true
+
+# # Enforce naming conventions for types and type variables
+# [tool.ruff.type_names]
+# use = true
