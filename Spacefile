@@ -1,0 +1,18 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: backend
+    src: ./
+    engine: python3.9
+    primary: true
+
+    public_routes:
+      - "/*"
+    presets:
+      env:
+        - name: ASYNC_DB_URL
+          default: "***INSERT_DB_URL***"
+
+        - name : HUGGINGFACEHUB_API_TOKEN
+          default: "****** 37 characters ******"
+    run: uvicorn api.main:app

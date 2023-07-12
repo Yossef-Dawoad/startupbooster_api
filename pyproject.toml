@@ -1,6 +1,6 @@
 [project]
 name = 'Brand Booster'
-version = "0.2.0"
+version = "0.2.1"
 authors = [
     {name= "Yousef Dawoud", email="yousefdawoud.dev@outlook.com"}
 ]
@@ -32,7 +32,33 @@ extend-select = [
 show-fixes = true
 target-version = "py310"
 line-length = 88
-ignore = []
+ignore = ['E501', 'SIM115']
+
+
+[tool.black]
+line-length = 88
+target-version = ["py310"] 
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | migrations
+  | alembic
+  | config.py
+  )/
+  '''
+
+
+
 
 
 # # Enforce type annotations for all variables, parameters, and return values

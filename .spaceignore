@@ -1,0 +1,27 @@
+# space
+.space
+.spaceignore
+
+# version control
+.hg
+.git
+.gitmodules
+.gitignore
+.svn
+
+# python
+.venv
+venv
+virtualenv
+__pycache__
+
+# env
+.env.local
+.env.*.local
+.env
+.envrc
+
+# ide
+.*.swp
+.vscode
+.history

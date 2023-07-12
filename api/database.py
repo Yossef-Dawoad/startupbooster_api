@@ -38,6 +38,6 @@ async def async_get_db() -> Generator:
     #     await adb.commit()
     db = Async_sessionLocal()
     try:
-        yield db  # noqa: E701
+        yield db
     finally:
-        await db.close()  # noqa: E701
+        await db.close()

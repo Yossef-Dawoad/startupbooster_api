@@ -2,13 +2,13 @@
 ## https://devblog.dunsap.com/2022/11-11---using-alembic-with-with-sqlalchemy-2/
 
 from datetime import datetime
-from typing import Annotated, TypeAlias
+from typing import Annotated
 
 import sqlalchemy as sa
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, registry
 from sqlalchemy.sql import func
 
-str30: TypeAlias = Annotated[str, 30]
+str30 = Annotated[str, 30]
 
 
 class Base(DeclarativeBase):

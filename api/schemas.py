@@ -18,7 +18,7 @@ class BusinessModel(BusinessModelBase):
     id: int
     snippet: str
     keywords: list[str]
-    createdAt: datetime | None = None
+    createdAt: datetime
 
     class Config:
         orm_mode = True

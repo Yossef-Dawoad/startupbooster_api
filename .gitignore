@@ -5,3 +5,4 @@ __pycache__/
 notes.md
 tut.md
 .ruff_cache/
+.space
