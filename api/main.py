@@ -2,6 +2,7 @@ import asyncio
 from typing import Annotated, Any
 
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from . import crud, models, schemas
@@ -13,11 +14,26 @@ app = FastAPI(
     description="""
     Brand Booster generate catchy tagline
     with SEO optimized keywords for your business.""",
-    version="0.2.2",  # [TODO] 0.3.0 authentications
+    version="0.2.3",  # [TODO] 0.3.0 authentications
     contact={
         "name": "Yousef Dawoud",
         "email": "yousefdawoud.dev@outlook.com",
     },
+)
+
+
+# [UPDATE] CORS Setup
+origins = [
+    # "http://localhost:3000",
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+    allow_credentials=True,
 )
 
 

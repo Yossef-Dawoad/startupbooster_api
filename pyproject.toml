@@ -1,6 +1,6 @@
 [project]
 name = 'Brand Booster'
-version = "0.2.2"
+version = "0.2.3"
 authors = [
     {name= "Yousef Dawoud", email="yousefdawoud.dev@outlook.com"}
 ]
