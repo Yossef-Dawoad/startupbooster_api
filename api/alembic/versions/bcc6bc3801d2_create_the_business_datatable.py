@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """create the business datatable
 
 Revision ID: bcc6bc3801d2

@@ -8,7 +8,33 @@ repos:
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.0.277
-    hooks: 	  
+    hooks:
       - id: ruff
         exclude: "alembic|config.py"
         args: [--fix, --exit-non-zero-on-fix]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    # Identify invalid files
+    - id: check-ast
+    - id: check-yaml
+    - id: check-json
+    - id: check-toml
+    # git checks
+    - id: check-merge-conflict
+    - id: check-added-large-files
+    - id: detect-private-key
+    - id: check-case-conflict
+    # Python checks
+    - id: check-docstring-first
+    - id: debug-statements
+    - id: requirements-txt-fixer
+    # - id: fix-encoding-pragma
+    - id: fix-byte-order-marker
+    # General quality checks
+    - id: mixed-line-ending
+    - id: trailing-whitespace
+      args: [--markdown-linebreak-ext=md]
+    - id: check-executables-have-shebangs
+    - id: end-of-file-fixer
