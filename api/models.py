@@ -1,5 +1,5 @@
 # SQLAlchemy
-## https://devblog.dunsap.com/2022/11-11---using-alembic-with-with-sqlalchemy-2/
+# https://devblog.dunsap.com/2022/11-11---using-alembic-with-with-sqlalchemy-2/
 
 from datetime import datetime
 from typing import Annotated
@@ -44,11 +44,21 @@ class Bussiness(Base):
     createdAt: Mapped[timeNow]  # ✨✨✨✨
 
     def __repr__(self) -> str:  # noqa: ANN101
-        return f" Business {self.name} \n{self.snippet}\n\n {self.keywords}"
+        str_obj = f"""
+Business {self.name}
+-----
+the tagline:
+{self.snippet[:100]}....
+-----
+keywords
+-----
+{self.keywords[:4]}....
+"""
+        return str_obj
 
 
 # class Keyword(Base):
-#     __tablename__ = "keywords"
+#  __tablename__ = "keywords"
 
 #     id: Mapped[intpk]
 #     name: Mapped[str30]

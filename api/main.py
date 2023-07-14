@@ -1,14 +1,21 @@
 import asyncio
+import logging
 from typing import Annotated, Any
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from api.logs.apilogconfig import init_loggers
+
 from . import crud, models, schemas
 from .database import async_get_db
 from .utils import generate_business_snippet, generate_keywords
 
+# TODO REMOVE any senetive logging
+# LOGs - This should run as soon as possible to catch all logs
+# Run only one of these
+init_loggers(logger_name="api-routes-logs")
 app = FastAPI(
     title="Brand Booster API",
     description="""
@@ -21,6 +28,8 @@ app = FastAPI(
     },
 )
 
+# init our logger
+log = logging.getLogger("api-routes-logs")
 
 # [UPDATE] CORS Setup
 origins = [
@@ -42,6 +51,12 @@ async def root() -> dict[str, str]:
     return {"message": "Hello World!"}
 
 
+@app.get("/logs")
+def log_now() -> dict[str, str]:
+    log.debug("Successfully hit the /log endpoint.")
+    return {"result": "OK"}
+
+
 @app.post(
     "/api/v2/businesses",
     response_model=schemas.BusinessModel,
@@ -51,10 +66,13 @@ async def create_business(
     db: Annotated[AsyncSession, Depends(async_get_db)],
 ) -> models.Bussiness:
     db_business = await crud.get_businessModel(db, business_name=business.name)
+    # [TODO] This just testing should be removed [Sensetive]
+    log.debug(db_business)
     # [TODO] we need a way to tell if it's created or fetched from the db
     if db_business:
+        log.warning("fetch-ing from the database")
         return db_business
-    print(business)
+
     brandMaker_funcs = [generate_business_snippet, generate_keywords]
     tasks = [  # Wait for the tasks to finish using asyncio.gather()
         asyncio.create_task(func(business.name)) for func in brandMaker_funcs
@@ -64,13 +82,15 @@ async def create_business(
     results_dict = {
         func.__name__: result for func, result in zip(brandMaker_funcs, results)
     }
-    print(results_dict)
-    return await crud.create_business(
+
+    db_business = await crud.create_business(
         db=db,
         business=business,
         snippet=results_dict["generate_business_snippet"],
         keywords=results_dict["generate_keywords"]["kw"],
     )
+    log.debug(db_business)
+    return db_business
 
 
 @app.get("/api/v2/businesses", response_model=list[schemas.BusinessModel])
