@@ -1,4 +1,4 @@
-## the backbone of how to connect and use the database
+# the backbone of how to connect and use the database
 
 
 import os
@@ -32,7 +32,7 @@ Async_sessionLocal = async_sessionmaker(
 async def async_get_db() -> Generator:
     async with Async_Engine.begin() as aconn:
         await aconn.run_sync(Base.metadata.create_all)
-
+    # [TODO] check for this sentax
     # async with Async_sessionLocal() as adb:
     #     yield adb
     #     await adb.commit()

@@ -45,19 +45,15 @@ async def root() -> dict[str, str]:
 @app.post(
     "/api/v2/businesses",
     response_model=schemas.BusinessModel,
-    status_code=201,
 )
 async def create_business(
     business: schemas.BusinessModelCreate,
     db: Annotated[AsyncSession, Depends(async_get_db)],
 ) -> models.Bussiness:
     db_business = await crud.get_businessModel(db, business_name=business.name)
+    # [TODO] we need a way to tell if it's created or fetched from the db
     if db_business:
-        # [TODO] return the element in the database if not auth
-        raise HTTPException(
-            status_code=400,
-            detail="Business Name already registered",
-        )
+        return db_business
 
     brandMaker_funcs = [generate_business_snippet, generate_keywords]
     tasks = [  # Wait for the tasks to finish using asyncio.gather()
