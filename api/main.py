@@ -54,7 +54,7 @@ async def create_business(
     # [TODO] we need a way to tell if it's created or fetched from the db
     if db_business:
         return db_business
-
+    print(business)
     brandMaker_funcs = [generate_business_snippet, generate_keywords]
     tasks = [  # Wait for the tasks to finish using asyncio.gather()
         asyncio.create_task(func(business.name)) for func in brandMaker_funcs
@@ -64,6 +64,7 @@ async def create_business(
     results_dict = {
         func.__name__: result for func, result in zip(brandMaker_funcs, results)
     }
+    print(results_dict)
     return await crud.create_business(
         db=db,
         business=business,
