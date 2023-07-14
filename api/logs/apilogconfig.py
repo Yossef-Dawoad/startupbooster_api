@@ -1,4 +1,6 @@
 import logging
+import os
+import stat
 
 import uvicorn
 
@@ -14,23 +16,27 @@ def init_loggers(logger_name: str = "app-logs") -> None:
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.DEBUG)
 
+    # Get the stat_result object for the file
+    st = os.stat("app.log")
+    # Check if the file is writable by anyone
+    W_Ok = bool(st.st_mode & (stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH))
+
     # create console handler and set level to debug
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
 
-    # create file handler and set level to debug
-    fh = logging.FileHandler("app.log", mode="a", encoding="utf-8")
-    fh.setLevel(logging.DEBUG)
-
     formatter = uvicorn.logging.DefaultFormatter(
         FORMAT,  datefmt="%m-%d %H:%M:%S",
     )
-    # add formatter to ch & fh
     ch.setFormatter(formatter)
-    fh.setFormatter(formatter)
+
+    if W_Ok:     # create file handler and set level to debug of write_OK
+        fh = logging.FileHandler("app.log", mode="a", encoding="utf-8")
+        fh.setLevel(logging.DEBUG)
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
 
     # add ch & fh to logger
     logger.addHandler(ch)
-    logger.addHandler(fh)
 
     logger.debug('running logger which has been just initalized')
