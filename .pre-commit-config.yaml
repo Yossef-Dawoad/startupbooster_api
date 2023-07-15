@@ -39,11 +39,11 @@ repos:
     - id: check-executables-have-shebangs
     - id: end-of-file-fixer
 
-  - repo: local
-    hooks:
-      - id: push-to-deta-space
-        name: push-to-deta-space
-        entry: space push
-        language: system
-        require_serial: true
-        pass_filenames: false
+  # - repo: local
+  #   hooks:
+  #     - id: push-to-deta-space
+  #       name: push-to-deta-space
+  #       entry: space push
+  #       language: system
+  #       require_serial: true
+  #       pass_filenames: false
