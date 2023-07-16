@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .logs.logconfig import init_loggers
-from .routes import business_routes, businessdb_routes
+from .routes import business_routes, businessdb_routes, experiments_routes
 
 # TODO REMOVE any senetive logging
 # LOGs - This should run as soon as possible to catch all logs
@@ -35,7 +35,7 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
     allow_credentials=True,
 )
@@ -43,6 +43,7 @@ app.add_middleware(
 
 app.include_router(business_routes.router)
 app.include_router(businessdb_routes.router)
+app.include_router(experiments_routes.router)
 
 
 @app.get("/")

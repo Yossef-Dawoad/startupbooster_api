@@ -7,3 +7,4 @@ tut.md
 .ruff_cache/
 .space
 app.log
+.pre-commit-config.yaml

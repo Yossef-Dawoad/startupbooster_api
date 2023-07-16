@@ -6,8 +6,9 @@ DEV_VERPOSE_LOG = True  # SETTING this to true expose sensitive data
 DEBUG_LEVEL = logging.DEBUG if DEV_VERPOSE_LOG else logging.INFO
 
 FORMAT: str = (
-    "%(levelprefix)s %(message)s : %(asctime)s" if not DEV_VERPOSE_LOG else
-    "%(levelprefix)s %(message)s \n%(levelprefix)s %(asctime)s | %(name)s - %(module)s:%(lineno)s - %(funcName)s()"
+    "%(levelprefix)s %(message)s : %(asctime)s"
+    if not DEV_VERPOSE_LOG
+    else "%(levelprefix)s %(message)s \n%(levelprefix)s %(asctime)s | %(name)s - %(module)s:%(lineno)s - %(funcName)s()"
 )
 
 
@@ -27,7 +28,8 @@ def init_loggers(logger_name: str = "app-logs") -> None:
     ch.setLevel(logging.DEBUG)
 
     formatter = uvicorn.logging.DefaultFormatter(
-        FORMAT,  datefmt="%m-%d %H:%M:%S",
+        FORMAT,
+        datefmt="%m-%d %H:%M:%S",
     )
     ch.setFormatter(formatter)
 
@@ -40,4 +42,4 @@ def init_loggers(logger_name: str = "app-logs") -> None:
     # add ch & fh to logger
     logger.addHandler(ch)
 
-    logger.debug('running logger which has been just initalized')
+    logger.debug("running logger which has been just initalized")

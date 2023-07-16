@@ -37,6 +37,6 @@ async def api_generate_business_seo(prompt: str) -> dict[str, Any]:
         func.__name__: result for func, result in zip(brandMaker_funcs, results)
     }
     return {
-        "snippets": results_dict["generate_business_snippet"],
+        "snippet": results_dict["generate_business_snippet"],
         "keywords": results_dict["generate_keywords"]["kw"],
     }
