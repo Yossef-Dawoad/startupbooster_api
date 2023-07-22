@@ -3,17 +3,17 @@ import logging
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
-
-# from ...database import async_get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .. import crud, models, schemas
 from ..database import async_get_db
-from ..utils import generate_business_snippet, generate_keywords
+from ..models.business_model import Bussiness
+from ..schemas.business_schema import BusinessModelCreate, BusinessSchema
+from ..utils import crud
+from ..utils.aigenerations import generate_business_snippet, generate_keywords
 
 router = APIRouter(
     prefix="/api/v2",
-    tags=["Businesses /w DataBase"],
+    tags=["Businesses w/ DataBase"],
 )
 
 log = logging.getLogger("api-routes-logs")
@@ -21,12 +21,12 @@ log = logging.getLogger("api-routes-logs")
 
 @router.post(
     "/businesses",
-    response_model=schemas.BusinessModel,
+    response_model=BusinessSchema,
 )
 async def create_business(
-    business: schemas.BusinessModelCreate,
+    business: BusinessModelCreate,
     db: Annotated[AsyncSession, Depends(async_get_db)],
-) -> models.Bussiness:
+) -> Bussiness:
     db_business = await crud.get_businessModel(db, business_name=business.name)
     # [TODO] This just testing should be removed [Sensetive]
     log.debug(db_business)
@@ -55,21 +55,21 @@ async def create_business(
     return db_business
 
 
-@router.get("/businesses", response_model=list[schemas.BusinessModel])
+@router.get("/businesses", response_model=list[BusinessSchema])
 async def read_businesses(
     skip: int = 0,
     limit: int = 10,
     db: AsyncSession = Depends(async_get_db),
-) -> list[models.Bussiness]:
+) -> list[Bussiness]:
     businesses = await crud.get_business(db, skip=skip, limit=limit)
     return businesses
 
 
-@router.get("/businesses/{id}", response_model=schemas.BusinessModel)
+@router.get("/businesses/{id}", response_model=BusinessSchema)
 async def read_business(
     id: int,
     db: AsyncSession = Depends(async_get_db),
-) -> list[models.Bussiness]:
+) -> list[Bussiness]:
     db_business = await crud.get_businessModelbyId(db, id)
     log.debug(db_business)
     if not db_business:

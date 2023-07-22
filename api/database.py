@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
-from api.models import Base
+from .models import business_model, user_model
 
 load_dotenv()
 
@@ -31,13 +31,9 @@ Async_sessionLocal = async_sessionmaker(
 # Dependency
 async def async_get_db() -> Generator:
     async with Async_Engine.begin() as aconn:
-        await aconn.run_sync(Base.metadata.create_all)
-    # [TODO] check for this sentax
-    # async with Async_sessionLocal() as adb:
-    #     yield adb
-    #     await adb.commit()
-    db = Async_sessionLocal()
-    try:
-        yield db
-    finally:
-        await db.close()
+        await aconn.run_sync(business_model.Base.metadata.create_all)
+        await aconn.run_sync(user_model.Base.metadata.create_all)
+
+    async with Async_sessionLocal() as adb:
+        yield adb
+        await adb.commit()

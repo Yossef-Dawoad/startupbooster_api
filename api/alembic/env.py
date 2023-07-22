@@ -7,7 +7,8 @@ from alembic import context
 from dotenv import load_dotenv
 from sqlalchemy import engine_from_config, pool
 
-from api import models
+import api.models.business_model as BusinessBase
+import api.models.user_model as UserBase
 
 ENV_DIR = os.getcwd()
 print(f"✨✨✨ ****** current working dir  ****** ✨✨✨\n{os.getcwd()}")
@@ -29,8 +30,10 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = models.Base.metadata
-
+target_metadata = [
+    BusinessBase.Base.metadata,
+    UserBase.Base.metadata,
+]
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")

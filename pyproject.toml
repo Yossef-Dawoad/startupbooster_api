@@ -1,6 +1,6 @@
 [project]
 name = 'Brand Booster'
-version = "0.2.3"
+version = "0.3.0rc"
 authors = [
     {name= "Yousef Dawoud", email="yousefdawoud.dev@outlook.com"}
 ]
@@ -32,7 +32,7 @@ extend-select = [
 show-fixes = true
 target-version = "py310"
 line-length = 88
-ignore = ['E501', 'SIM115']
+ignore = ['E501', 'SIM115', 'ANN101']
 
 
 [tool.black]
