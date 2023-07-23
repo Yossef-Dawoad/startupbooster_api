@@ -3,7 +3,7 @@ from typing import Any
 
 from fastapi import APIRouter
 
-from ..utils import generate_business_snippet, generate_keywords
+from ..utils.aigenerations import generate_business_snippet, generate_keywords
 
 router = APIRouter(
     prefix="/api/v1",

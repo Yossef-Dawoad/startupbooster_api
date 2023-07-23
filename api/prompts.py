@@ -9,3 +9,24 @@ Your question to answer: Query: Generate upbeat branding snippet for {brand_cate
 
 Answer:
 """
+
+get_creative_names = """
+generate 10 possibale creative names for the startup business: {business}
+"""
+
+get_businnsess_model_canvas = """
+your are a helplful assistant, you help young enterpreneurs to boost thier businesses you would recieve a brief discription of the startup idea, followed by series of questions be helpful as much as you can.
+startup brief_discription:
+{brief_discription}
+
+what potential problems the idea is solving,
+what could be our value proposition, key partners,
+Create a list of competitors for our startup, detailing their size and capitalization
+who might be the target customers, and how we may plan to make money.
+Write a clear and concise summary as a form of business model canvas for this startup idea,
+generate 10 creative names for our business
+generate 10 possible creative domain names for our business
+Write a corporate slogan for our business
+
+I want you to pretend to be a journalist. Ask me questions about our startup, one at a time, based on real interview questions from The New York Times.
+"""

@@ -4,15 +4,18 @@ from typing import Union  # for py39
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from . import models, schemas
+from ..models import business_model
+from ..schemas.business_schema import BusinessModelCreate
 
 
 async def get_businessModel(
     db: AsyncSession,
     business_name: str,
-) -> Union[models.Bussiness, None]:  # noqa: UP007
+) -> Union[business_model.Bussiness, None]:  # noqa: UP007
     business = await db.execute(
-        sa.select(models.Bussiness).filter(models.Bussiness.name == business_name),
+        sa.select(business_model.Bussiness).filter(
+            business_model.Bussiness.name == business_name,
+        ),
     )
     return business.scalar_one_or_none()
 
@@ -20,9 +23,11 @@ async def get_businessModel(
 async def get_businessModelbyId(
     db: AsyncSession,
     business_id: int,
-) -> Union[models.Bussiness, None]:  # noqa: UP007
+) -> Union[business_model.Bussiness, None]:  # noqa: UP007
     business = await db.execute(
-        sa.select(models.Bussiness).filter(models.Bussiness.id == business_id),
+        sa.select(business_model.Bussiness).filter(
+            business_model.Bussiness.id == business_id,
+        ),
     )
     return business.scalar_one_or_none()
 
@@ -32,21 +37,21 @@ async def get_business(
     db: AsyncSession,
     skip: int = 0,
     limit: int = 10,
-) -> list[models.Bussiness]:
+) -> list[business_model.Bussiness]:
     # businesses =  db.query(models.Bussiness).offset(skip).limit(limit).all()
     businesses = await db.execute(
-        sa.select(models.Bussiness).offset(skip).limit(limit),
+        sa.select(business_model.Bussiness).offset(skip).limit(limit),
     )
     return businesses.scalars().all()
 
 
 async def create_business(
     db: AsyncSession,
-    business: schemas.BusinessModelCreate,
+    business: BusinessModelCreate,
     snippet: str,
     keywords: list[str],
-) -> models.Bussiness:
-    db_business = models.Bussiness(
+) -> business_model.Bussiness:
+    db_business = business_model.Bussiness(
         name=business.name,
         snippet=snippet,
         keywords=keywords,

@@ -43,24 +43,9 @@ class Bussiness(Base):
     keywords: Mapped[pklStringList]  # ✨✨✨
     createdAt: Mapped[timeNow]  # ✨✨✨✨
 
-    def __repr__(self) -> str:  # noqa: ANN101
+    def __repr__(self) -> str:
         str_obj = f"""
-Business {self.name}
------
-the tagline:
-{self.snippet[:100]}....
------
-keywords
------
-{self.keywords[:4]}....
-"""
+        Business {self.name}
+        -----
+        """
         return str_obj
-
-
-# class Keyword(Base):
-#  __tablename__ = "keywords"
-
-#     id: Mapped[intpk]
-#     name: Mapped[str30]
-#     business_id: Mapped[business_fk]
-#     business: Mapped["Bussiness"] = relationship(back_populates="keywords")

@@ -7,7 +7,7 @@ repos:
         exclude: "alembic|config.py"
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.278
+    rev: v0.0.280
     hooks:
       - id: ruff
         exclude: "alembic|config.py"
@@ -38,7 +38,14 @@ repos:
         args: [--markdown-linebreak-ext=md]
       - id: check-executables-have-shebangs
       - id: end-of-file-fixer
-
+  - repo: local
+    hooks:
+      - id: pytest-check
+        name: pytest-check
+        entry: pytest
+        language: system
+        pass_filenames: false
+        always_run: true
   # - repo: local
   #   hooks:
   #     - id: push-to-deta-space

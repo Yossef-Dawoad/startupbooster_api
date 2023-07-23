@@ -3,8 +3,6 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
-############################## businesses schema Model ########################
-
 
 class BusinessModelBase(BaseModel):
     name: str
@@ -14,7 +12,7 @@ class BusinessModelCreate(BusinessModelBase):
     pass
 
 
-class BusinessModel(BusinessModelBase):
+class BusinessSchema(BusinessModelBase):
     id: int
     snippet: str
     keywords: list[str]
