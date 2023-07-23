@@ -2,7 +2,7 @@
 FROM python:latest as builder
 ENV PYTHONUNBUFFERED=1
 WORKDIR /app
-COPY requirements.txt requirements.txt
+COPY requirements.prod.txt requirements.txt
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt --target=/app --no-cache-dir
 
