@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel, EmailStr
 
 
@@ -14,6 +16,7 @@ class UserCreateSchema(UserBase):
 
 class UserSchema(UserBase):
     id: int
+    createdAt: datetime
 
     class Config:
         orm_mode = True

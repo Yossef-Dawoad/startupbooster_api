@@ -8,3 +8,4 @@ tut.md
 .space
 app.log
 .pre-commit-config.yaml
+.pytest_cache/
