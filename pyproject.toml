@@ -1,10 +1,35 @@
-[project]
-name = 'Brand Booster'
-version = "0.3.0rc"
-authors = [
-    {name= "Yousef Dawoud", email="yousefdawoud.dev@outlook.com"}
-]
-requires-python = ">=3.9"
+[tool.poetry]
+name = "langchain-api"
+version = "0.3.0"
+description = ""
+authors = ["Yossef-Dawoad <yossefdawoad15@gmail.com>"]
+license = "Apache-2.0 license"
+readme = "README.md"
+packages = [{include = "langchain_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+langchain = "^0.0.240"
+python-multipart = "^0.0.6"
+python-jose = {extras = ["crytography"], version = "^3.3.0"}
+aiosqlite = "^0.19.0"
+alembic = "^1.11.1"
+bcrypt = "^4.0.1"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+SQLAlchemy = "^2.0.19"
+python-dotenv = "^1.0.0"
+fastapi = {extras = ["all"], version = "^0.99.0"}
+huggingface-hub = "^0.16.4"
+sse-starlette = "^1.6.1"
+text-generation = "^0.6.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+black = "^23.7.0"
+ruff = "^0.0.280"
+pre-commit = "^3.3.3"
+flake8 = "^6.0.0"
+
 
 [tool.ruff]
 extend-select = [
@@ -57,14 +82,6 @@ exclude = '''
   )/
   '''
 
-
-
-
-
-# # Enforce type annotations for all variables, parameters, and return values
-# [tool.ruff.type_annotations]
-# always = true
-
-# # Enforce naming conventions for types and type variables
-# [tool.ruff.type_names]
-# use = true
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

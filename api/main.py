@@ -15,7 +15,7 @@ app = FastAPI(
     description="""
     StartUP Booster generate catchy tagline
     with SEO optimized keywords for your business.""",
-    version="0.3.0rc",  # [TODO] 0.3.0 authentications
+    version="0.3.0",  # [TODO] 0.3.0 authentications
     contact={
         "name": "Yousef Dawoud",
         "email": "yousefdawoud.dev@outlook.com",
