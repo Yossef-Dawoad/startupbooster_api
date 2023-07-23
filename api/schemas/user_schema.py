@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
@@ -6,8 +7,8 @@ from pydantic import BaseModel, EmailStr
 class UserBase(BaseModel):
     username: str
     email: EmailStr
-    full_name: str | None = ""
-    disabled: bool | None = False
+    full_name: Optional[str] = ""
+    disabled: Optional[bool] = False
 
 
 class UserCreateSchema(UserBase):

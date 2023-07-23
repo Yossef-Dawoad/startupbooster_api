@@ -1,5 +1,5 @@
 # ruff: enable=type_checking,type_annotations
-from typing import Union  # for py39
+from typing import Optional  # for py39
 
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,7 +11,7 @@ from ..schemas.business_schema import BusinessModelCreate
 async def get_businessModel(
     db: AsyncSession,
     business_name: str,
-) -> Union[business_model.Bussiness, None]:  # noqa: UP007
+) -> Optional[business_model.Bussiness]:
     business = await db.execute(
         sa.select(business_model.Bussiness).filter(
             business_model.Bussiness.name == business_name,
@@ -23,7 +23,7 @@ async def get_businessModel(
 async def get_businessModelbyId(
     db: AsyncSession,
     business_id: int,
-) -> Union[business_model.Bussiness, None]:  # noqa: UP007
+) -> Optional[business_model.Bussiness]:
     business = await db.execute(
         sa.select(business_model.Bussiness).filter(
             business_model.Bussiness.id == business_id,

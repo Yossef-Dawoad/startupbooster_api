@@ -1,6 +1,6 @@
 import os
 from datetime import datetime, timedelta, timezone
-from typing import Annotated, Any
+from typing import Annotated, Optional
 
 import sqlalchemy as sa
 from fastapi import Depends, HTTPException, status
@@ -34,8 +34,8 @@ def get_hashed_passcode(plain: str) -> str:
 
 
 def create_access_token(
-    subject: str | Any,
-    expires_delta: timedelta | None = None,
+    subject: Optional[str],
+    expires_delta: Optional[timedelta] = None,
 ) -> str:
     if not expires_delta:
         expires_delta = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MIN)
@@ -46,8 +46,8 @@ def create_access_token(
 
 
 def create_refresh_token(
-    subject: str | Any,
-    expires_delta: timedelta | None = None,
+    subject: Optional[str],
+    expires_delta: Optional[timedelta] = None,
 ) -> str:
     if not expires_delta:
         expires_delta = timedelta(minutes=REFRESH_TOKEN_EXPIRE_TIME)
@@ -68,7 +68,7 @@ def unauth_exception_error(
     )
 
 
-async def get_user(db: AsyncSession, user_name: str) -> User | None:
+async def get_user(db: AsyncSession, user_name: str) -> Optional[User]:
     user = await db.execute(
         sa.select(User).filter(User.username == user_name),
     )
@@ -79,7 +79,7 @@ async def authenticate_user(
     db: AsyncSession,
     user_name: str,
     password: str,
-) -> User | None:
+) -> Optional[User]:
     user = await get_user(db, user_name)
     if not user or not user.verify_passcode(password):
         return None

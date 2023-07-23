@@ -57,7 +57,7 @@ extend-select = [
 show-fixes = true
 target-version = "py310"
 line-length = 88
-ignore = ['E501', 'SIM115', 'ANN101']
+ignore = ['E501', 'SIM115', 'ANN101', "UP007"]
 
 
 [tool.black]
