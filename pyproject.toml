@@ -11,7 +11,7 @@ packages = [{include = "langchain_api"}]
 python = "^3.9"
 langchain = "^0.0.240"
 python-multipart = "^0.0.6"
-python-jose = {extras = ["crytography"], version = "^3.3.0"}
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 aiosqlite = "^0.19.0"
 alembic = "^1.11.1"
 bcrypt = "^4.0.1"
@@ -57,7 +57,7 @@ extend-select = [
 show-fixes = true
 target-version = "py310"
 line-length = 88
-ignore = ['E501', 'SIM115', 'ANN101']
+ignore = ['E501', 'SIM115', 'ANN101', "UP007"]
 
 
 [tool.black]
