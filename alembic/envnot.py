@@ -3,12 +3,12 @@ import os
 import sys
 from logging.config import fileConfig
 
-from alembic import context
 from dotenv import load_dotenv
 from sqlalchemy import engine_from_config, pool
 
 import api.models.business_model as BusinessBase
 import api.models.user_model as UserBase
+from alembic import context
 
 ENV_DIR = os.getcwd()
 print(f"✨✨✨ ****** current working dir  ****** ✨✨✨\n{os.getcwd()}")

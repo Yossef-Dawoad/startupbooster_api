@@ -1,8 +1,10 @@
+from datetime import datetime
 from typing import Annotated
 
 import sqlalchemy as sa
 from passlib.hash import bcrypt
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, registry
+from sqlalchemy.sql import func
 
 str30 = Annotated[str, 30]
 str50 = Annotated[str, 50]
@@ -20,6 +22,10 @@ class Base(DeclarativeBase):
 intpk = Annotated[int, mapped_column(primary_key=True)]
 text = Annotated[str, mapped_column(sa.String, nullable=False)]
 boolType = Annotated[bool, mapped_column(sa.Boolean, default=False)]
+timeNow = Annotated[
+    datetime,
+    mapped_column(sa.DateTime(timezone=True), default=func.now()),
+]
 
 
 class User(Base):
@@ -30,6 +36,7 @@ class User(Base):
     full_name: Mapped[str50]  # ✨✨
     email: Mapped[text]  # ✨✨✨
     hashed_password: Mapped[text]  # ✨✨✨
+    createdAt: Mapped[timeNow]  # ✨✨✨✨
     disabled: Mapped[boolType]  # ✨✨✨
 
     def __repr__(self) -> str:

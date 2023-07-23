@@ -7,10 +7,12 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from pydantic import ValidationError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import async_get_db
 from ..models.user_model import User
+from ..schemas.token_schema import TokenPayload, TokenSchema
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 JWT_REFRESH_SECRET_KEY = os.environ["JWT_REFRESH_SECRET_KEY"]
@@ -101,3 +103,36 @@ async def get_current_user(
         )
 
     return user
+
+
+async def get_refresh_token(
+    token: Annotated[str, Depends(oauth2_scheme)],
+    db: Annotated[AsyncSession, Depends(async_get_db)],
+) -> TokenSchema:
+    try:
+        print(token)
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[HASH_ALGORITHEM],
+        )
+        token_data = TokenPayload(**payload)
+    except (JWTError, ValidationError):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    user = await get_user(db, user_name=token_data.sub)
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Invalid token for user",
+        )
+
+    return {
+        "access_token": create_access_token(user.username),
+        "refresh_token": create_refresh_token(user.username),
+        "token_type": "brearer",
+    }

@@ -14,6 +14,7 @@ from ..utils.authentication import (
     create_refresh_token,
     get_current_user,
     get_hashed_passcode,
+    get_refresh_token,
     get_user,
 )
 
@@ -59,6 +60,13 @@ async def create_user(
     await db.commit()
     await db.refresh(db_user)
     return db_user
+
+
+@router.post("/refresh-token", summary="Refresh token", response_model=TokenSchema)
+async def refresh_token(
+    new_token: Annotated[TokenSchema, Depends(get_refresh_token)],
+) -> dict[str, str]:
+    return new_token
 
 
 @router.get("/users/me")
