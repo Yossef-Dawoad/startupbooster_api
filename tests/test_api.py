@@ -49,8 +49,9 @@ def test_get_token() -> None:
         "/auth/register",
         json=user_auth_data,
     ).json()
-    if ("detail" in user_register) & (
-        user_register["detail"] == "username already registered"
+    if (
+        "detail" in user_register
+        and user_register["detail"] == "username already registered"
     ):
         user_register = {
             "username": user_auth_data["username"],
