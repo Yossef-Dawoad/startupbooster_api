@@ -36,7 +36,7 @@ jobs:
         if [ "$RUNNER_OS" == "Linux" ]; then
             python -m pip install --upgrade pip
         elif [ "$RUNNER_OS" == "Windows" ]; then
-            elif [ "$RUNNER_OS" == "Windows" ]; then
+            python.exe -m pip install --upgrade pip
         else
             echo "$RUNNER_OS not supported"
             exit 1
