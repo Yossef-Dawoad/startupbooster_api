@@ -3,7 +3,13 @@ FROM python:latest as builder
 ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 COPY requirements.prod.txt requirements.txt
-RUN pip3 install --upgrade pip
+
+# Use an ARG to define the OS
+ARG os
+# Use a shell script to run different commands for pip install based on the OS
+RUN if [ \"$os\" = \"windows\" ]; then python.exe -m pip install --upgrade pip; else pip3 install --upgrade pip; fi
+
+# RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt --target=/app --no-cache-dir
 
 # Second stage: copy the app and run it
