@@ -46,11 +46,18 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
-  # - repo: local
-  #   hooks:
-  #     - id: push-to-deta-space
-  #       name: push-to-deta-space
-  #       entry: space push
-  #       language: system
-  #       require_serial: true
-  #       pass_filenames: false
+
+      # - id: requirments-updated-check
+      #   name: requirments-updated-check
+      #   entry: bash -c 'poetry export -f requirements.txt --output requirements.prod.txt --without dev && poetry export -f requirements.txt --output requirements.prod.txt --with dev'
+      #   language: system
+      #   pass_filenames: false
+      #   always_run: true
+      #   args: [--no-diff] # Only run on changes to the requirements.txt file.
+
+      # - id: push-to-deta-space
+      #   name: push-to-deta-space
+      #   entry: space push
+      #   language: system
+      #   require_serial: true
+      #   pass_filenames: false
