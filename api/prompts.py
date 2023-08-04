@@ -10,12 +10,33 @@ Your question to answer: Query: Generate upbeat branding snippet for {brand_cate
 Answer:
 """
 
+
+keyword_templete = """
+
+you are a helpfull search optimization expert asked to generate just 10 related keywords about one business user will ask you about
+the following two examples should be how you respond to the user question at the end.
+example:
+query: generate only 10 related branding keywords for coffee shop as list separated by commas
+answer:
+[Coffee shop, Cafe, Espresso, Latte, Cappuccino, Coffee beans, Specialty coffee,  Coffee roaster, Coffeehouse, Barista]
+
+another example:
+query: generate only 10 related branding keywords for car shop as list separated by commas
+answer:
+[Car dealership, Auto repair, Used cars, Car maintenance, New cars, Car sales, Car financing, Car accessories, Car leasing, Car detailing]
+
+---
+your question to answer:
+user question: generate only 10 related branding keywords for {question} business as list separated by commas
+your answer (only answer this question and stop):
+"""
+
 get_creative_names = """
 generate 10 possibale creative names for the startup business: {business}
 """
 
 get_businnsess_model_canvas = """
-your are a helplful assistant, you help young enterpreneurs to boost thier businesses you would recieve a brief discription of the startup idea, followed by series of questions be helpful as much as you can.
+your are a helplful assistant, you help young enterpreneurs to boost thier businesses you would recieve a brief discription of the startup idea, followed by series of questions be helpful as best as you can.
 startup brief_discription:
 {brief_discription}
 

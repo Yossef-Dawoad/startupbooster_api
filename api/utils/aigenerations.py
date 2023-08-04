@@ -2,7 +2,9 @@ import os
 import re
 
 from dotenv import load_dotenv
-from langchain import HuggingFaceHub, LLMChain, PromptTemplate
+from langchain import HuggingFaceHub, PromptTemplate
+
+from ..prompts import keyword_templete
 
 load_dotenv()
 
@@ -48,52 +50,17 @@ def process_generatedkeywords(text: str) -> list[str]:
 
 async def generate_keywords(promptq: str) -> dict[str, list]:
     """Generate 10 related branding keywords for a given business as a dictionary."""
-    template = """
-you are a helpfull search optimization expert asked to generate 10 related keywords about different business
-the following examples should be how you respond to the user questions.
-example 1:
-query: generate only 10 related branding keywords for coffee shop as bullet-points
-answer:
-- Coffee shop
-- Cafe
-- Espresso
-- Latte
-- Cappuccino
-- Coffee beans
-- Specialty coffee
-- Coffee roaster
-- Coffeehouse
-- Barista
-example 2:
-query: generate only 10 related branding keywords for car shop as bullet-points
-answer:
-- Car dealership
-- Auto repair
-- Car maintenance
-- Used cars
-- New cars
-- Car sales
-- Car financing
-- Car accessories
-- Car leasing
-- Car detailing
-your question to answer:
-user question: generate only 10 related branding keywords for {question} as bullet-points
-your answer:
-"""
-    prompt = PromptTemplate(template=template, input_variables=["question"])
-    llm_chain = LLMChain(prompt=prompt, llm=LLM)
-    # arun is async generations but not this model
-    response = llm_chain.run(promptq)
-
+    prompt = PromptTemplate.from_template(template=keyword_templete)
+    chain = prompt | LLM
+    response = chain.invoke({"question": promptq})
     # Extract output text.
     keywords_: list[str] = process_generatedkeywords(response)
     return {"kw": keywords_}
 
 
 async def generate_business_snippet(promptq: str) -> str:
-    template = "Generate upbeat branding snippet for {question}"
-    prompt = PromptTemplate(template=template, input_variables=["question"])
-    llm_chain = LLMChain(prompt=prompt, llm=LLM)
-    response = llm_chain.run(promptq)
+    _template = "Generate upbeat branding snippet for {question}"
+    prompt = PromptTemplate.from_template(template=_template)
+    chain = prompt | LLM
+    response = chain.invoke({"question": promptq})
     return response
